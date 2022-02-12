@@ -15,3 +15,9 @@ docker push <your docker hub username>/<the same name from before>  # push to yo
 ```
 
 You should be able to access it from RunAI once it pushes.
+
+
+### TODO List (images):
+
+- [ ] Pytorch build for A100s
+
