@@ -4,16 +4,19 @@ channels:
   - nvidia
   - conda-forge
   - defaults
+  - pytorch
+  - pyg
 
 dependencies:
   - python=3.7
   - ipykernel
   # Install cuda libs + ptxas compiler from nvidia channel
   # This will accelerate the compilation of kernels for your specific card
-  - cudatoolkit=11
+  - cudatoolkit=11.3
   - cudnn=8
-  - cupti=11
+  - cupti=11.3
   - cuda-nvcc
+  - pyg
   - ffmpeg
   - pip
   - pip:
