@@ -17,6 +17,7 @@ dependencies:
   - cupti=11.3
   - cuda-nvcc
   - pyg
+  - pytorch-lightning
   - ffmpeg
   - pip
   - pip:
