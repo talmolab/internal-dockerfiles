@@ -1,0 +1,11 @@
+#!/bin/bash
+
+set -e
+
+env_file="$1"
+env_name="$2"
+
+
+mamba env create -p "${CONDA_DIR}/envs/${env_name}" -f "$env_file"
+mamba clean --all -f -y
+fix-permissions "${CONDA_DIR}"
