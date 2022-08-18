@@ -48,6 +48,8 @@ RUN apt-get update --yes && \
     build-essential \
     # ImportError: libGL.so.1: cannot open shared object file: No such file or directory
     libgl1 \
+    # ImportError: libgthread-2.0.so.0: cannot open shared object file: No such file or directory
+    libglib2.0-0 \
     wget && \
     apt-get clean && rm -rf /var/lib/apt/lists/* && \
     echo "en_US.UTF-8 UTF-8" > /etc/locale.gen && \
