@@ -5,10 +5,9 @@ channels:
   - conda-forge
   - defaults
   - pytorch
-  - pyg
 
 dependencies:
-  - python=3.7
+  - python=3.8
   - ipykernel
   # Install cuda libs + ptxas compiler from nvidia channel
   # This will accelerate the compilation of kernels for your specific card
@@ -16,22 +15,19 @@ dependencies:
   - cudnn=8
   - cupti=11.3
   - cuda-nvcc
-  - pytorch
-  - pyg
-  - pytorch-lightning
+  - pytorch::pytorch=1.12.1
+  - pytorch::torchvision
+  - pytorch::torchaudio
+  - conda-forge::pytorch-lightning
   - ffmpeg
   - nodejs
   - pip
   - pip:
-    - tensorflow==2.6.*
+    - tensorflow==2.6.3
     - matplotlib
     - pandas
     - seaborn
     - ipywidgets
     - rich
     - scikit-learn
-    - --find-links https://download.pytorch.org/whl/cu113/torch_stable.html
-    - torch==1.10.2+cu113
-    - torchvision==0.11.3+cu113
-    - torchaudio==0.10.2+cu113
     - wandb
