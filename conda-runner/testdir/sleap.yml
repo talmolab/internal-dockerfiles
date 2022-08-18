@@ -7,4 +7,5 @@ dependencies:
   - nvidia::cuda-nvcc=11.3
   - pip
   - pip:
-    - sleap==1.2.4
+    - tensorflow==2.6.3
+    - sleap==1.2.6
