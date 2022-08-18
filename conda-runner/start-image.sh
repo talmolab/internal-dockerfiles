@@ -16,18 +16,17 @@ _log "in start-image.sh"
 _log "RUNNER_CONDA_ENV:" "$RUNNER_CONDA_ENV"
 _log "RUNNER_CMD:" "${RUNNER_CMD[@]}"
 
-# Check 
-# conda env list --json
-# {
-#   "envs": [
-#     "C:\\Miniconda3",
-#     "C:\\Miniconda3\\envs\\basepy37",
-#     "C:\\Miniconda3\\envs\\campy",
-#     "C:\\Miniconda3\\envs\\mabe2022",
-#     "C:\\Miniconda3\\envs\\mabe2022-preproc",
-#     "C:\\Miniconda3\\envs\\sleap_v1.2.1"
-#   ]
-# }
+if [[ $RUNNER_CONDA_ENV == *":"* ]]; then
+    _log "Installing new environment."
+    IFS=":" read -ra ENV_PARTS <<< "$RUNNER_CONDA_ENV"
+    RUNNER_CONDA_ENV="${ENV_PARTS[0]}"
+    CONDA_ENV_FILE="${ENV_PARTS[1]}"
+    _log "RUNNER_CONDA_ENV:" "$RUNNER_CONDA_ENV"
+    _log "CONDA_ENV_FILE:" "$CONDA_ENV_FILE"
+    install-environment "$CONDA_ENV_FILE" "$RUNNER_CONDA_ENV"
+fi
 
-
-conda run -n "$RUNNER_CONDA_ENV" ${RUNNER_CMD[@]}
+# conda run -n "$RUNNER_CONDA_ENV" ${RUNNER_CMD[@]}
+# conda run -n "$RUNNER_CONDA_ENV" "${RUNNER_CMD[@]}"
+# conda run -n "$RUNNER_CONDA_ENV" "$RUNNER_CMD"
+eval conda run -n "$RUNNER_CONDA_ENV" "$RUNNER_CMD"
