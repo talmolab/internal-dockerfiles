@@ -115,7 +115,7 @@ This will install the environment from the provided file using the specified env
 
 ### Installing a package in an existing environment
 
-To do this, we need to call `conda run -n <env>` again:
+To do this, we just need to call `conda run -n <env>` again inside the `RUNNER_CMD`:
 ```
-docker run -e RUNNER_CONDA_ENV="tf-extras" -e RUNNER_CMD="pip install sleap && conda run -n tf-extras python -c \"import sleap\"" -v %cd%:"/home/runner" talmo/conda-runner
+docker run -e RUNNER_CONDA_ENV="tf-extras" -e RUNNER_CMD="pip install sleap && conda run -n tf-extras python -c \"import sleap; sleap.versions()\"" -v %cd%:"/home/runner" talmo/conda-runner
 ```
