@@ -68,7 +68,6 @@ sys.argv: ['test.py', '-flag1', 'arg with spaces']
 
 ### Installing a custom environment
 
-docker run -e RUNNER_CONDA_ENV="sleap:testdir/sleap.yml" -e RUNNER_CMD="python test.py -flag1 \"arg with spaces\"" -v %cd%:"/home/runner" talmo/conda-runner
 Let's say we want to run a custom environment. First, we'll define an `environment.yml` file:
 ```
 name: sleap
