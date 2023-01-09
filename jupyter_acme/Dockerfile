@@ -53,7 +53,20 @@ RUN "${CONDA_DIR}/envs/${conda_env}/bin/python" -m ipykernel install --user --na
 ENV PATH "${CONDA_DIR}/envs/${conda_env}/bin:${PATH}"
 
 # if you want this environment to be the default one, uncomment the following line:
-#ENV CONDA_DEFAULT_ENV ${conda_env}
+ENV CONDA_DEFAULT_ENV ${conda_env}
+
+#RUN echo "/opt/conda/envs/$conda_env/lib"
+# add conda lib path to LD_LIBRARY_PATH
+#ENV LD_LIBRARY_PATH "/usr/lib/x86_64-linux-gnu:/opt/conda/envs/$conda_env/lib${LD_LIBRARY_PATH}"
+### debug statement to check LD_LIBRARY_PATH value
+#RUN echo "$LD_LIBRARY_PATH"
+#RUN echo $PATH
+
+# add conda lib path to LD_LIBRARY_PATH (for CUDA)
+RUN echo "export LD_LIBRARY_PATH=${CONDA_DIR}/envs/${conda_env}/lib:\$LD_LIBRARY_PATH" > ${CONDA_DIR}/envs/${conda_env}/etc/conda/activate.d/env.sh
+
+# add conda lib path on notebook startup
+RUN echo "export LD_LIBRARY_PATH=${CONDA_DIR}/envs/${conda_env}/lib:\$LD_LIBRARY_PATH" >> /home/${NB_USER}/.bashrc
 
 USER root
 
