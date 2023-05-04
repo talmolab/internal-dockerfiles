@@ -1,0 +1,38 @@
+name: python39
+
+channels:
+  - nvidia
+  - conda-forge
+  - defaults
+  - pytorch
+  - pyg
+
+dependencies:
+  - python=3.9
+  - ipykernel
+  # Install cuda libs + ptxas compiler from nvidia channel
+  # This will accelerate the compilation of kernels for your specific card
+  - cudatoolkit=11.3
+  - cudnn=8
+  - cupti=11.3
+  - cuda-nvcc
+  - pytorch
+  - pyg
+  - pytorch-lightning
+  - ffmpeg
+  - nodejs
+  - pip
+  - pip:
+    - tensorflow==2.8.*
+    - tensorflow-probability==0.16.0
+    - matplotlib
+    - pandas
+    - seaborn
+    - ipywidgets
+    - rich
+    - scikit-learn
+    - --find-links https://download.pytorch.org/whl/cu113/torch_stable.html
+    - torch==1.10.2+cu113
+    - torchvision==0.11.3+cu113
+    - torchaudio==0.10.2+cu113
+    - wandb
