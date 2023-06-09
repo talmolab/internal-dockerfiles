@@ -1,0 +1,38 @@
+name: python38
+
+channels:
+  - nvidia
+  - conda-forge
+  - defaults
+
+dependencies:
+  - python=3.8
+  - ipykernel
+#  - conda-forge::tensorflow-gpu==2.8.*
+#  - conda-forge::tensorflow-probability==0.16.*
+  - pytorch::pytorch==1.11.0
+  - conda-forge::opentsne
+  - pillow=8.4.0
+  - ffmpeg
+  - imageio
+  - cudatoolkit=11.3.1
+  - cudnn=8.2.1
+  - nvidia::cuda-nvcc=11.3
+  - pip
+  - pip:
+      - tensorflow==2.8.0
+      - dm-reverb[tensorflow]==0.7.2
+      - dm-sonnet
+      - dm-acme[tf,envs,jax,testing] @ git+https://github.com/deepmind/acme.git@e3e6f0bc07b02bc9943e391add22f2a59752af84
+      - ipdb
+      - mujoco
+      - dm_control
+      - absl-py
+      - imageio-ffmpeg
+      - pyyaml
+      - matplotlib
+      - pandas
+      - seaborn
+      - scikit-learn
+      - protobuf==3.20.3
+#      - tensorflow-probability==0.16.0
