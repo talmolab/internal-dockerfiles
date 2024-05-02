@@ -1,4 +1,4 @@
-# tf-extras
+# notebook
 
 This image defines a Jupyter Lab instance used to run interactive jobs. It is based off of [Jupyter Docker Stacks](https://github.com/jupyter/docker-stacks).
 
@@ -8,7 +8,7 @@ The stack is:
 2. [`minimal-notebook`](https://github.com/jupyter/docker-stacks/tree/main/minimal-notebook)
 3. [`scipy-notebook`](https://github.com/jupyter/docker-stacks/tree/main/scipy-notebook)
 4. [`tensorflow-notebook`](https://github.com/jupyter/docker-stacks/tree/main/tensorflow-notebook)
-5. `tf-extras` (this image)
+5. `notebook` (this image)
 
 This image adds:
 
