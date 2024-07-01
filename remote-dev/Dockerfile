@@ -1,9 +1,6 @@
-FROM ghcr.io/ucsd-ets/scipy-ml-notebook:2024.2-stable
+FROM ubuntu:jammy
 
-LABEL maintainer="Scott <yuy004@ucsd.edu>"
-
-# Fix DL4006
-# SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+LABEL maintainer="Scott Yang<yuy004@ucsd.edu>"
 
 USER root
 
@@ -30,15 +27,19 @@ CMD ["/usr/sbin/sshd", "-D"]
 # TODO:
 # install conda
 
+ENV PATH="/root/anaconda3/bin:${PATH}"
+ARG PATH="/root/anaconda3/bin:${PATH}"
+RUN apt-get update
+
+RUN apt-get install -y wget git && rm -rf /var/lib/apt/lists/*
+
+RUN wget \
+    https://repo.anaconda.com/archive/Anaconda3-2024.06-1-Linux-x86_64.sh \
+    && mkdir /root/.conda \
+    && bash Anaconda3-2024.06-1-Linux-x86_64.sh -b \
+    && rm -f Anaconda3-2024.06-1-Linux-x86_64.sh
+
 # install env COPY + RUN
-
-# add conda to path
-
-# install git
-
-ENV PATH "${CONDA_DIR}/envs/${conda_env}/bin:${PATH}"
-
-# if you want this environment to be the default one, uncomment the following line:
-ENV CONDA_DEFAULT_ENV ${conda_env}
-
-USER root
+RUN mkdir environments
+COPY environments environments
+RUN conda env create -f environments/environment.yml
