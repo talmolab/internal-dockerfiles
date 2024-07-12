@@ -1,0 +1,23 @@
+name: vnl
+channels:
+  - conda-forge
+  - anaconda
+  - menpo
+dependencies:
+  - python==3.8
+  - numpy==1.22.4
+  - matplotlib
+  - pandas
+  - pip
+  - glew
+  - mesalib
+  - mesa-libgl-cos6-x86_64
+  - glfw3
+  - ipykernel
+  - pip: 
+    - -r requirements.txt 
+
+variables:             # Set MuJoCo environment variables
+  MUJOCO_GL: osmesa
+  PYOPENGL_PLATFORM: osmesa
+  LD_LIBRARY_PATH: $LD_LIBRARY_PATH:/root/anaconda3/envs/vnl/lib:/root/anaconda3/pkgs/python-3.8.17-he550d4f_0_cpython/lib:/root/.mujoco/mujoco200_linux/bin

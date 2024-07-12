@@ -1,0 +1,7 @@
+ipykernel
+mujoco==2.3.7
+wandb
+dm_control==1.0.8
+tables 
+--find-link https://github.com/deepmind/acme.git@e3e6f0bc07b02bc9943e391add22f2a59752af84
+dm-acme[jax,tf,testing,envs]
