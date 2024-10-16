@@ -10,9 +10,23 @@ USER root
 RUN apt clean
 RUN apt update
 
+RUN apt-get update --yes && apt-get install --yes \ 
+    wget \
+    build-essential \
+    git \
+    openssh-server \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-RUN apt update --yes && apt install --yes build-essential
-RUN apt-get update && apt-get install -y openssh-server
+# Download and install Miniconda
+RUN wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh && \
+    bash miniconda.sh -b -p /opt/conda && \
+    rm miniconda.sh
+
+# Add conda to PATH
+ENV PATH="/opt/conda/bin:${PATH}"
+
+#RUN apt-get update && apt-get install -y openssh-server
 RUN mkdir /var/run/sshd
 RUN echo 'root:root' | chpasswd
 RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
@@ -26,14 +40,17 @@ RUN echo "export VISIBLE=now" >> /etc/profile
 EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
 
+# Git
+RUN apt-get -y install git
+
 USER ${NB_UID}
 
 # Install Mamba gator
-RUN mamba install --quiet --yes \
-    'conda-forge::mamba_gator' && \
-    mamba clean --all -f -y && \
-    fix-permissions "${CONDA_DIR}" && \
-    fix-permissions "/home/${NB_USER}"
+#RUN mamba install --quiet --yes \
+#    'conda-forge::mamba_gator' && \
+#    mamba clean --all -f -y && \
+#    fix-permissions "${CONDA_DIR}" && \
+#    fix-permissions "/home/${NB_USER}"
 
 # https://jupyter-docker-stacks.readthedocs.io/en/latest/using/recipes.html#add-a-python-3-x-environment
 # ARG conda_env=vnl
