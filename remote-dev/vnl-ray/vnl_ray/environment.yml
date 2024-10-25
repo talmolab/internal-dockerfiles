@@ -1,4 +1,4 @@
-name: flybody
+name: vnl_ray
 channels:
   - conda-forge
   - anaconda

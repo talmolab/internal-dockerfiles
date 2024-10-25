@@ -10,6 +10,13 @@ RUN apt update
 
 RUN apt update --yes && apt install --yes build-essential
 RUN apt-get update && apt-get install -y openssh-server
+
+# use tini instead of init
+ENV TINI_VERSION v0.19.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
+ENTRYPOINT ["/tini", "--"]
+
 RUN mkdir /var/run/sshd
 RUN echo 'root:root' | chpasswd
 RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
@@ -24,22 +31,27 @@ EXPOSE 22
 CMD ["/usr/sbin/sshd", "-D"]
 
 
-# TODO:
-# install conda
+ENV PATH "/root/anaconda3/bin:${PATH}"
 
-ENV PATH="/root/anaconda3/bin:${PATH}"
-ARG PATH="/root/anaconda3/bin:${PATH}"
 RUN apt-get update
 
-RUN apt-get install -y wget git ffmpeg htop && rm -rf /var/lib/apt/lists/*
+RUN apt-get install -y wget git vim ffmpeg htop && rm -rf /var/lib/apt/lists/*
 
 RUN wget \
-    https://repo.anaconda.com/archive/Anaconda3-2024.06-1-Linux-x86_64.sh \
+    https://repo.anaconda.com/archive/Anaconda3-2024.10-1-Linux-x86_64.sh \
     && mkdir /root/.conda \
-    && bash Anaconda3-2024.06-1-Linux-x86_64.sh -b \
-    && rm -f Anaconda3-2024.06-1-Linux-x86_64.sh
+    && bash Anaconda3-2024.10-1-Linux-x86_64.sh -b \
+    && rm -f Anaconda3-2024.10-1-Linux-x86_64.sh
+
+# need to run this line to add conda to PATH
+RUN conda init bash \
+    && . ~/.bashrc
 
 # install env COPY + RUN
-RUN mkdir environments
-COPY environments environments
-RUN conda env create -f environments/environment.yml
+RUN mkdir vnl_ray
+COPY vnl_ray vnl_ray
+RUN conda env create -f vnl_ray/environment.yml
+
+RUN mkdir vnl_brax
+COPY vnl_brax vnl_brax
+RUN conda env create -f vnl_brax/environment.yml
