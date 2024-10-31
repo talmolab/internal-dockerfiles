@@ -47,10 +47,10 @@ RUN wget \
 RUN conda init bash \
     && . ~/.bashrc
 
-# install env COPY + RUN
-RUN mkdir vnl_ray
-COPY vnl_ray vnl_ray
-RUN conda env create -f vnl_ray/environment.yml
+# # install env COPY + RUN
+# RUN mkdir vnl_ray
+# COPY vnl_ray vnl_ray
+# RUN conda env create -f vnl_ray/environment.yml
 
 # RUN mkdir vnl_brax
 # COPY vnl_brax vnl_brax

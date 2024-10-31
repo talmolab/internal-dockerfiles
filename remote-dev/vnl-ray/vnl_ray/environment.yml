@@ -7,8 +7,8 @@ dependencies:
   - python=3.10
   - numpy=1.26.4
   - matplotlib
-  - cudatoolkit # cuda related
-  - cudnn
+  # - cudatoolkit # cuda related
+  # - cudnn
   - pandas
   - pip
   - glew
@@ -22,4 +22,4 @@ dependencies:
 variables:             # Set MuJoCo environment variables
   MUJOCO_GL: osmesa
   PYOPENGL_PLATFORM: osmesa
-  LD_LIBRARY_PATH: $LD_LIBRARY_PATH:/root/anaconda3/envs/flybody/lib
+  # LD_LIBRARY_PATH: /root/anaconda3/envs/vnl_ray/lib # for tf related path
