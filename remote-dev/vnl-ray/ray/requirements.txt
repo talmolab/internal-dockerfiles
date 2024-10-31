@@ -14,3 +14,4 @@ pickle5 # ray needs it
 nanoid
 imageio[pyav]
 imageio[ffmpeg]
+tensorflow[and-cuda] # install cuda via pip

@@ -48,10 +48,10 @@ RUN conda init bash \
     && . ~/.bashrc
 
 # install env COPY + RUN
-RUN mkdir vnl_ray
-COPY vnl_ray vnl_ray
-RUN conda env create -f vnl_ray/environment.yml
+RUN mkdir ray
+COPY ray ray
+RUN conda env create -f ray/environment.yml
 
-# RUN mkdir vnl_brax
-# COPY vnl_brax vnl_brax
-# RUN conda env create -f vnl_brax/environment.yml
+# RUN mkdir brax
+# COPY brax brax
+# RUN conda env create -f brax/environment.yml
