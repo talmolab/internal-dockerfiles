@@ -10,6 +10,13 @@ RUN apt update
 
 RUN apt update --yes && apt install --yes build-essential
 RUN apt-get update && apt-get install -y openssh-server
+
+# use tini instead of init
+ENV TINI_VERSION v0.19.0
+ADD https://github.com/krallin/tini/releases/download/${TINI_VERSION}/tini /tini
+RUN chmod +x /tini
+ENTRYPOINT ["/tini", "--"]
+
 RUN mkdir /var/run/sshd
 RUN echo 'root:root' | chpasswd
 RUN sed -i 's/#*PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config
@@ -44,6 +51,6 @@ RUN conda init bash \
     && . ~/.bashrc
 
 # install env COPY + RUN
-RUN mkdir ray
-COPY ray ray
-RUN conda env create -f ray/environment.yml
+RUN mkdir track
+COPY track track
+RUN conda env create -f track/environment.yml
