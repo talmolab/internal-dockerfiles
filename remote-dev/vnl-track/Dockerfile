@@ -1,6 +1,7 @@
-FROM ubuntu:jammy
+# Directly from a cuda built image.
+FROM nvidia/cuda:12.6.1-base-ubuntu24.04  
 
-LABEL maintainer="Scott Yang<yuy004@ucsd.edu>"
+LABEL maintainer="Scott Yang <scyang@salk.edu>"
 
 USER root
 
@@ -36,19 +37,19 @@ CMD ["/usr/sbin/sshd", "-D"]
 
 RUN apt-get update
 
-RUN apt-get install -y wget git && rm -rf /var/lib/apt/lists/*
+RUN apt-get install -y wget curl git && rm -rf /var/lib/apt/lists/*
 
-RUN wget \
-    https://repo.anaconda.com/archive/Anaconda3-2024.06-1-Linux-x86_64.sh \
-    && mkdir /root/.conda \
-    && bash Anaconda3-2024.06-1-Linux-x86_64.sh -b \
-    && rm -f Anaconda3-2024.06-1-Linux-x86_64.sh
+# This shell does not workd directly
 
+RUN curl -fsSL --compressed https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -o "Miniforge3-Linux-x86_64.sh" && \
+    chmod +x "Miniforge3-Linux-x86_64.sh" && \
+    bash "Miniforge3-Linux-x86_64.sh" -b -p "/root/miniforge3" && \
+    rm "Miniforge3-Linux-x86_64.sh" && \
+    /root/miniforge3/bin/conda init bash && \
+    . ~/.bashrc
 
-# need to run this line to add conda to PATH
-ENV PATH "/root/anaconda3/bin:${PATH}"
-RUN conda init bash \
-    && . ~/.bashrc
+# add conda to path so we can create env
+ENV PATH "/root/miniforge3/bin:${PATH}"
 
 # install env COPY + RUN
 RUN mkdir track
