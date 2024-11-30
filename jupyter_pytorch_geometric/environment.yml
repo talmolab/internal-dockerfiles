@@ -1,0 +1,28 @@
+name: python37
+
+channels:
+  - nvidia
+  - conda-forge
+  - defaults
+  - pytorch
+  - pyg
+
+dependencies:
+  - python=3.7
+  - ipykernel
+  # Install cuda libs + ptxas compiler from nvidia channel
+  # This will accelerate the compilation of kernels for your specific card
+  - cudatoolkit=11.3
+  - cudnn=8
+  - cupti=11.3
+  - cuda-nvcc
+  - pyg
+  - pytorch-lightning
+  - ffmpeg
+  - pip
+  - pip:
+    - tensorflow==2.6.*
+    - matplotlib
+    - pandas
+    - seaborn
+    - scikit-learn
