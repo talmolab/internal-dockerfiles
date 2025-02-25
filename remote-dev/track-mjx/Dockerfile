@@ -35,17 +35,26 @@ CMD ["/usr/sbin/sshd", "-D"]
 # TODO:
 # install conda
 
-RUN apt-get update
+# Install all necessary packages in one step and remove apt cache.
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        build-essential \
+        openssh-server \
+        wget \
+        curl \
+        git \
+        screen \
+        ffmpeg && \
+    rm -rf /var/lib/apt/lists/*
 
-RUN apt-get install -y wget curl git && rm -rf /var/lib/apt/lists/*
-
-# This shell does not workd directly
+# This shell does not work directly
 
 RUN curl -fsSL --compressed https://github.com/conda-forge/miniforge/releases/latest/download/Miniforge3-Linux-x86_64.sh -o "Miniforge3-Linux-x86_64.sh" && \
     chmod +x "Miniforge3-Linux-x86_64.sh" && \
     bash "Miniforge3-Linux-x86_64.sh" -b -p "/root/miniforge3" && \
     rm "Miniforge3-Linux-x86_64.sh" && \
     /root/miniforge3/bin/conda init bash && \
+    /root/miniforge3/bin/conda clean --all -y && \ 
     . ~/.bashrc
 
 # add conda to path so we can create env
@@ -55,3 +64,4 @@ ENV PATH "/root/miniforge3/bin:${PATH}"
 RUN mkdir track
 COPY track track
 RUN conda env create -f track/environment.yml
+RUN conda clean --all -y
